@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from GestionAudiovisualApp.views import (inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', inicio, name='inicio'),  
+    path('tipos/', TipoEquipoListView.as_view(), name='tipoequipo-list'),
+    path('tipos/new/', TipoEquipoCreateView.as_view(), name='tipoequipo-create'),
+    path('tipos/edit/<int:pk>/', TipoEquipoUpdateView.as_view(), name='tipoequipo-update'),
+    path('tipos/delete/<int:pk>/', TipoEquipoDeleteView.as_view(), name='tipoequipo-delete'),
 ]

@@ -116,13 +116,13 @@ class TecnologiaConexionListView(ListView):
 
 class TecnologiaConexionCreateView(CreateView):
     model = TecnologiaConexion
-    fields = ['nombre', 'estado']
+    fields = ['descripcion', 'estado']
     template_name = 'tecnologia-conexion/tecnologiaconexion_form.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
 
 class TecnologiaConexionUpdateView(UpdateView):
     model = TecnologiaConexion
-    fields = ['nombre', 'estado']
+    fields = ['descripcion', 'estado']
     template_name = 'tecnologia-conexion/tecnologiaconexion_form.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
 

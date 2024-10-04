@@ -72,10 +72,30 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="{% url 'tipoequipo-list' %}" class="nav-link active">
+                <a href="{% url 'tipoequipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tipoequipo-list' %}active{% endif %}">
                     <i class="fas fa-list"></i> Tipos de Equipos
                 </a>
             </li>
+        </li>
+        <!-- Opción para Marcas -->
+        <li class="nav-item">
+            <a href="{% url 'marca-list' %}" class="nav-link {% if request.resolver_match.url_name == 'marca-list' %}active{% endif %}">
+                <i class="fas fa-tags"></i> Marcas
+            </a>
+        </li>
+        <!-- Opción para Modelos -->
+        <li class="nav-item">
+            <a href="{% url 'modelo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'modelo-list' %}active{% endif %}">
+                <i class="fas fa-cubes"></i> Modelos
+            </a>
+        </li>
+        <!-- Opción para Tecnologías de Conexión -->
+        <li class="nav-item">
+            <a href="{% url 'tecnologiaconexion-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tecnologiaconexion-list' %}active{% endif %}">
+                <i class="fas fa-network-wired"></i> Tecnologías de Conexión
+            </a>
+        </li>
+    </ul>
             <!-- Agregar más ítems si es necesario -->
         </ul>
     </nav>

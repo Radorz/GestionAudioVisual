@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from GestionAudiovisualApp.views import (inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView)
+from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,                                         
+    MarcaListView, MarcaCreateView, MarcaUpdateView, MarcaDeleteView,
+    ModeloListView, ModeloCreateView, ModeloUpdateView, ModeloDeleteView,
+    TecnologiaConexionListView, TecnologiaConexionCreateView, TecnologiaConexionUpdateView, TecnologiaConexionDeleteView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +28,22 @@ urlpatterns = [
     path('tipos/new/', TipoEquipoCreateView.as_view(), name='tipoequipo-create'),
     path('tipos/edit/<int:pk>/', TipoEquipoUpdateView.as_view(), name='tipoequipo-update'),
     path('tipos/delete/<int:pk>/', TipoEquipoDeleteView.as_view(), name='tipoequipo-delete'),
+
+      # CRUD de Marca
+    path('marcas/', MarcaListView.as_view(), name='marca-list'),
+    path('marcas/new/', MarcaCreateView.as_view(), name='marca-create'),
+    path('marcas/update/<int:pk>/', MarcaUpdateView.as_view(), name='marca-update'),
+    path('marcas/delete/<int:pk>/', MarcaDeleteView.as_view(), name='marca-delete'),
+
+    # CRUD de Modelo
+    path('modelos/', ModeloListView.as_view(), name='modelo-list'),
+    path('modelos/new/', ModeloCreateView.as_view(), name='modelo-create'),
+    path('modelos/update/<int:pk>/', ModeloUpdateView.as_view(), name='modelo-update'),
+    path('modelos/delete/<int:pk>/', ModeloDeleteView.as_view(), name='modelo-delete'),
+
+    # CRUD de Tecnología de Conexión
+    path('tecnologias/', TecnologiaConexionListView.as_view(), name='tecnologiaconexion-list'),
+    path('tecnologias/new/', TecnologiaConexionCreateView.as_view(), name='tecnologiaconexion-create'),
+    path('tecnologias/update/<int:pk>/', TecnologiaConexionUpdateView.as_view(), name='tecnologiaconexion-update'),
+    path('tecnologias/delete/<int:pk>/', TecnologiaConexionDeleteView.as_view(), name='tecnologiaconexion-delete'),
 ]

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import TipoEquipo, Marca, Modelo, TecnologiaConexion
+from .models import TipoEquipo, Marca, Modelo, TecnologiaConexion, Equipo, Usuario, Empleado
 from django.urls import reverse_lazy
 from django import forms
 from django.db.models import Q  # Para manejar consultas complejas
-from .forms import ModeloForm
+from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm
 
 # Create your views here.
 
@@ -130,3 +130,73 @@ class TecnologiaConexionDeleteView(DeleteView):
     model = TecnologiaConexion
     template_name = 'tecnologia-conexion/tecnologiaconexion_confirm_delete.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
+
+class EquipoListView(ListView):
+    model = Equipo
+    template_name = 'equipos/equipo_list.html'
+    context_object_name = 'equipos'
+
+# Vista para crear un nuevo Equipo
+class EquipoCreateView(CreateView):
+    model = Equipo,
+    form_class = EquipoForm
+    template_name = 'equipos/equipo_form.html'
+    # fields = ['descripcion', 'numero_serial', 'service_tag', 'tipo_equipo', 'marca', 'modelo', 'tecnologia_conexion', 'estado']
+    success_url = reverse_lazy('equipo-list')
+
+# Vista para actualizar un Equipo existente
+class EquipoUpdateView(UpdateView):
+    model = Equipo
+    template_name = 'equipos/equipo_form.html'
+    fields = ['descripcion', 'numero_serial', 'service_tag', 'tipo_equipo', 'marca', 'modelo', 'tecnologia_conexion', 'estado']
+    success_url = reverse_lazy('equipo-list')
+
+# Vista para eliminar un Equipo
+class EquipoDeleteView(DeleteView):
+    model = Equipo
+    template_name = 'equipos/equipo_confirm_delete.html'
+    success_url = reverse_lazy('equipo-list')
+
+class UsuarioListView(ListView):
+    model = Usuario
+    template_name = 'usuarios/usuario_list.html'
+    context_object_name = 'usuarios'
+
+class UsuarioCreateView(CreateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'usuarios/usuario_form.html'
+    success_url = reverse_lazy('usuario-list')
+
+class UsuarioUpdateView(UpdateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'usuarios/usuario_form.html'
+    success_url = reverse_lazy('usuario-list')
+
+class UsuarioDeleteView(DeleteView):
+    model = Usuario
+    template_name = 'usuarios/usuario_confirm_delete.html'
+    success_url = reverse_lazy('usuario-list')
+
+class EmpleadoListView(ListView):
+    model = Empleado
+    template_name = 'empleados/empleado_list.html'
+    context_object_name = 'empleados'
+
+class EmpleadoCreateView(CreateView):
+    model = Empleado
+    form_class = EmpleadoForm
+    template_name = 'empleados/empleado_form.html'
+    success_url = reverse_lazy('empleado-list')
+
+class EmpleadoUpdateView(UpdateView):
+    model = Empleado
+    form_class = EmpleadoForm
+    template_name = 'empleados/empleado_form.html'
+    success_url = reverse_lazy('empleado-list')
+
+class EmpleadoDeleteView(DeleteView):
+    model = Empleado
+    template_name = 'empleados/empleado_confirm_delete.html'
+    success_url = reverse_lazy('empleado-list')

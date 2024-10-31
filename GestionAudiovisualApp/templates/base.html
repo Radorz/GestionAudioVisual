@@ -95,6 +95,25 @@
                 <i class="fas fa-network-wired"></i> Tecnologías de Conexión
             </a>
         </li>
+        <!-- Opción para Equipos -->
+        <li class="nav-item">
+            <a href="{% url 'equipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'equipo-list' %}active{% endif %}">
+                <i class="fas fa-laptop"></i> Equipos
+            </a>
+        </li>
+        <!-- Opción para Usuarios -->
+        <li class="nav-item">
+            <a href="{% url 'usuario-list' %}" class="nav-link {% if request.resolver_match.url_name == 'usuario-list' %}active{% endif %}">
+                <i class="fas fa-user"></i> Usuarios
+            </a>
+        </li>
+
+          <!-- Opción para Empleados -->
+          <li class="nav-item">
+            <a href="{% url 'empleado-list' %}" class="nav-link {% if request.resolver_match.url_name == 'empleado-list' %}active{% endif %}">
+                <i class="fas fa-user-tie"></i> Empleados
+            </a>
+        </li>
     </ul>
             <!-- Agregar más ítems si es necesario -->
         </ul>

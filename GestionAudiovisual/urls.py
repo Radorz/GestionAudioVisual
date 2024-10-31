@@ -19,7 +19,11 @@ from django.urls import path
 from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,                                         
     MarcaListView, MarcaCreateView, MarcaUpdateView, MarcaDeleteView,
     ModeloListView, ModeloCreateView, ModeloUpdateView, ModeloDeleteView,
-    TecnologiaConexionListView, TecnologiaConexionCreateView, TecnologiaConexionUpdateView, TecnologiaConexionDeleteView)
+    TecnologiaConexionListView, TecnologiaConexionCreateView, TecnologiaConexionUpdateView, TecnologiaConexionDeleteView,
+    EquipoListView, EquipoCreateView, EquipoUpdateView, EquipoDeleteView,
+    UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView,
+    EmpleadoListView, EmpleadoCreateView, EmpleadoUpdateView, EmpleadoDeleteView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,4 +50,20 @@ urlpatterns = [
     path('tecnologias/new/', TecnologiaConexionCreateView.as_view(), name='tecnologiaconexion-create'),
     path('tecnologias/update/<int:pk>/', TecnologiaConexionUpdateView.as_view(), name='tecnologiaconexion-update'),
     path('tecnologias/delete/<int:pk>/', TecnologiaConexionDeleteView.as_view(), name='tecnologiaconexion-delete'),
+
+    # CRUD de Equipos
+    path('equipos/', EquipoListView.as_view(), name='equipo-list'),
+    path('equipos/new/', EquipoCreateView.as_view(), name='equipo-create'),
+    path('equipos/<int:pk>/edit/', EquipoUpdateView.as_view(), name='equipo-update'),
+    path('equipos/<int:pk>/delete/', EquipoDeleteView.as_view(), name='equipo-delete'),
+
+    path('usuarios/', UsuarioListView.as_view(), name='usuario-list'),
+    path('usuarios/new/', UsuarioCreateView.as_view(), name='usuario-create'),
+    path('usuarios/<int:pk>/edit/', UsuarioUpdateView.as_view(), name='usuario-update'),
+    path('usuarios/<int:pk>/delete/', UsuarioDeleteView.as_view(), name='usuario-delete'),
+
+    path('empleados/', EmpleadoListView.as_view(), name='empleado-list'),
+    path('empleados/new/', EmpleadoCreateView.as_view(), name='empleado-create'),
+    path('empleados/<int:pk>/edit/', EmpleadoUpdateView.as_view(), name='empleado-update'),
+    path('empleados/<int:pk>/delete/', EmpleadoDeleteView.as_view(), name='empleado-delete'),
 ]

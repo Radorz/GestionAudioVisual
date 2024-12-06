@@ -24,7 +24,7 @@ from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoC
     EquipoListView, EquipoCreateView, EquipoUpdateView, EquipoDeleteView,
     UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView,
     EmpleadoListView, EmpleadoCreateView, EmpleadoUpdateView, EmpleadoDeleteView,
-    PrestamoListView, PrestamoCreateView, PrestamoUpdateView, PrestamoDeleteView, DevolverPrestamoView, CustomLoginView
+    PrestamoListView, PrestamoCreateView, PrestamoUpdateView, PrestamoDeleteView, DevolverPrestamoView, CustomLoginView, consulta_criterios_view
 )
 
 urlpatterns = [
@@ -79,5 +79,6 @@ urlpatterns = [
     path('prestamos/<int:pk>/edit/', PrestamoUpdateView.as_view(), name='prestamo-update'),
     path('prestamos/<int:pk>/delete/', PrestamoDeleteView.as_view(), name='prestamo-delete'),
     path('prestamos/<int:pk>/devolver/', DevolverPrestamoView.as_view(), name='devolver-prestamo'),
+    path('consulta/', consulta_criterios_view, name='consulta-criterios'),
 
 ]

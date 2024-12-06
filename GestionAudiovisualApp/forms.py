@@ -14,7 +14,7 @@ class ModeloForm(forms.ModelForm):
 
 class EquipoForm(forms.ModelForm):
     tipo_equipo = forms.ModelChoiceField(
-        queryset= TipoEquipo.objects.values_list('descripcion', flat=True),
+        queryset= TipoEquipo.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'}),
         empty_label="Seleccione un Tipo Equipo"
     )
@@ -73,3 +73,11 @@ class DevolverPrestamoForm(forms.ModelForm):
         if not cleaned_data.get('fecha_devolucion'):
             raise forms.ValidationError("Debe registrar una fecha de devolución.")
         return cleaned_data
+
+
+class ConsultaCriteriosForm(forms.Form):
+    usuario = forms.ModelChoiceField(queryset=Usuario.objects.all(), required=False, label="Usuario")
+    equipo = forms.ModelChoiceField(queryset=Equipo.objects.all(), required=False, label="Equipo")
+    fecha_inicio = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}), label="Fecha Inicio")
+    fecha_fin = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}), label="Fecha Fin")
+    tipo_equipo = forms.ModelChoiceField(queryset=TipoEquipo.objects.all(), required=False, label="Tipo de Equipo")

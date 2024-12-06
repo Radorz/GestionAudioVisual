@@ -4,7 +4,7 @@ from .models import TipoEquipo, Marca, Modelo, TecnologiaConexion, Equipo, Usuar
 from django.urls import reverse_lazy, reverse
 from django import forms
 from django.db.models import Q  # Para manejar consultas complejas
-from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm, PrestamoForm, DevolverPrestamoForm
+from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm, PrestamoForm, DevolverPrestamoForm, ConsultaCriteriosForm
 from django.contrib.auth.views import LoginView
 
 # Create your views here.
@@ -249,3 +249,22 @@ class DevolverPrestamoView(UpdateView):
         # Cambiar estado a devuelto
         form.instance.estado = False
         return super().form_valid(form)
+
+def consulta_criterios_view(request):
+    form = ConsultaCriteriosForm(request.GET or None)
+    prestamos = Prestamo.objects.all()
+
+    # Aplicar filtros según los criterios
+    if form.is_valid():
+        if form.cleaned_data.get('usuario'):
+            prestamos = prestamos.filter(usuario=form.cleaned_data['usuario'])
+        if form.cleaned_data.get('equipo'):
+            prestamos = prestamos.filter(equipo=form.cleaned_data['equipo'])
+        if form.cleaned_data.get('fecha_inicio'):
+            prestamos = prestamos.filter(fecha_prestamo__gte=form.cleaned_data['fecha_inicio'])
+        if form.cleaned_data.get('fecha_fin'):
+            prestamos = prestamos.filter(fecha_prestamo__lte=form.cleaned_data['fecha_fin'])
+        if form.cleaned_data.get('tipo_equipo'):
+            prestamos = prestamos.filter(equipo__tipo_equipo=form.cleaned_data['tipo_equipo'])
+
+    return render(request, 'prestamos/consulta_criterios.html', {'form': form, 'prestamos': prestamos})

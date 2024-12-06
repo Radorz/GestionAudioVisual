@@ -1,15 +1,24 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import TipoEquipo, Marca, Modelo, TecnologiaConexion, Equipo, Usuario, Empleado
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from .models import TipoEquipo, Marca, Modelo, TecnologiaConexion, Equipo, Usuario, Empleado, Prestamo
+from django.urls import reverse_lazy, reverse
 from django import forms
 from django.db.models import Q  # Para manejar consultas complejas
-from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm
+from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm, PrestamoForm, DevolverPrestamoForm
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
 
 def inicio(request):
     return render(request, 'inicio.html')
+
+
+class CustomLoginView(LoginView):
+    template_name = 'auth/login.html'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('inicio')
 # CRUD para TipoEquipo
 class TipoEquipoListView(ListView):
     model = TipoEquipo
@@ -28,12 +37,11 @@ class TipoEquipoListView(ListView):
 
 class TipoEquipoCreateView(CreateView):
     model = TipoEquipo
-    fields = ['descripcion', 'estado']
+    fields = ['id','descripcion']
     template_name = 'tipos-equipos/tipoequipo_form.html'
     success_url = reverse_lazy('tipoequipo-list')
     widgets = {
-            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
-            'estado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'})         
         }
 
 class TipoEquipoUpdateView(UpdateView):
@@ -46,6 +54,13 @@ class TipoEquipoDeleteView(DeleteView):
     model = TipoEquipo
     template_name = 'tipos-equipos/tipoequipo_confirm_delete.html'
     success_url = reverse_lazy('tipoequipo-list')
+
+class ToggleEstadoTipoEquipoView(View):
+    def post(self, request, pk):
+        tipo_equipo = get_object_or_404(TipoEquipo, pk=pk)
+        tipo_equipo.estado = not tipo_equipo.estado  # Cambiar el estado
+        tipo_equipo.save()
+        return redirect(reverse('tipoequipo-list'))
 
 class MarcaListView(ListView):
     model = Marca
@@ -200,3 +215,37 @@ class EmpleadoDeleteView(DeleteView):
     model = Empleado
     template_name = 'empleados/empleado_confirm_delete.html'
     success_url = reverse_lazy('empleado-list')
+
+class PrestamoListView(ListView):
+    model = Prestamo
+    template_name = 'prestamos/prestamo_list.html'
+    context_object_name = 'prestamos'
+
+class PrestamoCreateView(CreateView):
+    model = Prestamo
+    form_class = PrestamoForm    
+    template_name = 'prestamos/prestamo_form.html'
+    # fields = ['empleado', 'equipo', 'usuario', 'fecha_prestamo', 'fecha_devolucion', 'comentario', 'estado']
+    success_url = reverse_lazy('prestamo-list')
+
+class PrestamoUpdateView(UpdateView):
+    model = Prestamo
+    template_name = 'prestamos/prestamo_form.html'
+    form_class = PrestamoForm       
+    # fields = ['empleado', 'equipo', 'usuario', 'fecha_prestamo', 'fecha_devolucion', 'comentario', 'estado']
+    success_url = reverse_lazy('prestamo-list')
+
+class PrestamoDeleteView(DeleteView):
+    model = Prestamo
+    template_name = 'prestamos/prestamo_confirm_delete.html'
+    success_url = reverse_lazy('prestamo-list')
+
+class DevolverPrestamoView(UpdateView):
+    model = Prestamo
+    form_class = DevolverPrestamoForm
+    template_name = 'prestamos/devolver_prestamo.html'
+    success_url = reverse_lazy('prestamo-list')
+    def form_valid(self, form):
+        # Cambiar estado a devuelto
+        form.instance.estado = False
+        return super().form_valid(form)

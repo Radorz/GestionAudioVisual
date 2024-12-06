@@ -15,23 +15,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
-from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,                                         
+from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,ToggleEstadoTipoEquipoView,                                         
     MarcaListView, MarcaCreateView, MarcaUpdateView, MarcaDeleteView,
     ModeloListView, ModeloCreateView, ModeloUpdateView, ModeloDeleteView,
     TecnologiaConexionListView, TecnologiaConexionCreateView, TecnologiaConexionUpdateView, TecnologiaConexionDeleteView,
     EquipoListView, EquipoCreateView, EquipoUpdateView, EquipoDeleteView,
     UsuarioListView, UsuarioCreateView, UsuarioUpdateView, UsuarioDeleteView,
-    EmpleadoListView, EmpleadoCreateView, EmpleadoUpdateView, EmpleadoDeleteView
+    EmpleadoListView, EmpleadoCreateView, EmpleadoUpdateView, EmpleadoDeleteView,
+    PrestamoListView, PrestamoCreateView, PrestamoUpdateView, PrestamoDeleteView, DevolverPrestamoView, CustomLoginView
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio, name='inicio'),  
+    path('inicio', inicio, name='inicio'),  
+    path('', CustomLoginView.as_view(), name='login'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('tipos/', TipoEquipoListView.as_view(), name='tipoequipo-list'),
     path('tipos/new/', TipoEquipoCreateView.as_view(), name='tipoequipo-create'),
     path('tipos/edit/<int:pk>/', TipoEquipoUpdateView.as_view(), name='tipoequipo-update'),
     path('tipos/delete/<int:pk>/', TipoEquipoDeleteView.as_view(), name='tipoequipo-delete'),
+    path('tipoequipos/<int:pk>/toggle_estado/', ToggleEstadoTipoEquipoView.as_view(), name='tipoequipo-toggle-estado'),
+
 
       # CRUD de Marca
     path('marcas/', MarcaListView.as_view(), name='marca-list'),
@@ -66,4 +73,11 @@ urlpatterns = [
     path('empleados/new/', EmpleadoCreateView.as_view(), name='empleado-create'),
     path('empleados/<int:pk>/edit/', EmpleadoUpdateView.as_view(), name='empleado-update'),
     path('empleados/<int:pk>/delete/', EmpleadoDeleteView.as_view(), name='empleado-delete'),
+
+    path('prestamos/', PrestamoListView.as_view(), name='prestamo-list'),
+    path('prestamos/new/', PrestamoCreateView.as_view(), name='prestamo-create'),
+    path('prestamos/<int:pk>/edit/', PrestamoUpdateView.as_view(), name='prestamo-update'),
+    path('prestamos/<int:pk>/delete/', PrestamoDeleteView.as_view(), name='prestamo-delete'),
+    path('prestamos/<int:pk>/devolver/', DevolverPrestamoView.as_view(), name='devolver-prestamo'),
+
 ]

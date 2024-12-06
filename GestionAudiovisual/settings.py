@@ -132,3 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_URL = 'login'  # URL para la página de inicio de sesión
+LOGIN_REDIRECT_URL = '/'  # Redirección después de iniciar sesión
+LOGOUT_REDIRECT_URL = '/login/'  # Redirección después de cerrar sesión

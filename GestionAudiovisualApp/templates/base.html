@@ -70,37 +70,56 @@
     <nav id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark">
         <h4>Gestión AudioVisual</h4>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
+        <ul class="nav nav-pills flex-column mb-auto">       
+            <!-- Opción para Prestamos -->
+        <li class="nav-item">
+            <a href="{% url 'prestamo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'prestamo-list' %}active{% endif %}">
+                <i class="fas fa-exchange-alt"></i> Prestamos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu-administracion" aria-expanded="false" aria-controls="submenu-administracion">
+                <i class="fas fa-cogs"></i> Administracion
+            </a>
+            <ul class="collapse list-unstyled ms-3" id="submenu-administracion">
+                <li class="nav-item">
+                    <a href="{% url 'tipoequipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tipoequipo-list' %}active{% endif %}">
+                        <i class="fas fa-list"></i> Tipos de Equipos
+                    </a>
+                </li>
+    
+            <!-- Opción para Marcas -->
             <li class="nav-item">
-                <a href="{% url 'tipoequipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tipoequipo-list' %}active{% endif %}">
-                    <i class="fas fa-list"></i> Tipos de Equipos
+                <a href="{% url 'marca-list' %}" class="nav-link {% if request.resolver_match.url_name == 'marca-list' %}active{% endif %}">
+                    <i class="fas fa-tags"></i> Marcas
                 </a>
             </li>
+            <!-- Opción para Modelos -->
+            <li class="nav-item">
+                <a href="{% url 'modelo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'modelo-list' %}active{% endif %}">
+                    <i class="fas fa-cubes"></i> Modelos
+                </a>
+            </li>
+            <!-- Opción para Tecnologías de Conexión -->
+            <li class="nav-item">
+                <a href="{% url 'tecnologiaconexion-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tecnologiaconexion-list' %}active{% endif %}">
+                    <i class="fas fa-network-wired"></i> Tecnologías de Conexión
+                </a>
+            </li>
+            <!-- Opción para Equipos -->
+            <li class="nav-item">
+                <a href="{% url 'equipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'equipo-list' %}active{% endif %}">
+                    <i class="fas fa-laptop"></i> Equipos
+                </a>
+            </li>
+            </ul>
         </li>
-        <!-- Opción para Marcas -->
+
         <li class="nav-item">
-            <a href="{% url 'marca-list' %}" class="nav-link {% if request.resolver_match.url_name == 'marca-list' %}active{% endif %}">
-                <i class="fas fa-tags"></i> Marcas
+            <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu-Seguridad" aria-expanded="false" aria-controls="submenu-seguridad">
+                <i class="fas fa-key"></i> Seguridad
             </a>
-        </li>
-        <!-- Opción para Modelos -->
-        <li class="nav-item">
-            <a href="{% url 'modelo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'modelo-list' %}active{% endif %}">
-                <i class="fas fa-cubes"></i> Modelos
-            </a>
-        </li>
-        <!-- Opción para Tecnologías de Conexión -->
-        <li class="nav-item">
-            <a href="{% url 'tecnologiaconexion-list' %}" class="nav-link {% if request.resolver_match.url_name == 'tecnologiaconexion-list' %}active{% endif %}">
-                <i class="fas fa-network-wired"></i> Tecnologías de Conexión
-            </a>
-        </li>
-        <!-- Opción para Equipos -->
-        <li class="nav-item">
-            <a href="{% url 'equipo-list' %}" class="nav-link {% if request.resolver_match.url_name == 'equipo-list' %}active{% endif %}">
-                <i class="fas fa-laptop"></i> Equipos
-            </a>
-        </li>
+            <ul class="collapse list-unstyled ms-3" id="submenu-Seguridad">
         <!-- Opción para Usuarios -->
         <li class="nav-item">
             <a href="{% url 'usuario-list' %}" class="nav-link {% if request.resolver_match.url_name == 'usuario-list' %}active{% endif %}">
@@ -113,6 +132,8 @@
             <a href="{% url 'empleado-list' %}" class="nav-link {% if request.resolver_match.url_name == 'empleado-list' %}active{% endif %}">
                 <i class="fas fa-user-tie"></i> Empleados
             </a>
+        </li>
+            </ul>
         </li>
     </ul>
             <!-- Agregar más ítems si es necesario -->

@@ -26,13 +26,14 @@ from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoC
     EmpleadoListView, EmpleadoCreateView, EmpleadoUpdateView, EmpleadoDeleteView,
     PrestamoListView, PrestamoCreateView, PrestamoUpdateView, PrestamoDeleteView, DevolverPrestamoView, CustomLoginView, consulta_criterios_view
 )
+from GestionAudiovisualApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inicio', inicio, name='inicio'),  
     path('', CustomLoginView.as_view(), name='login'),
     path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout', views.custom_logout, name='logout'),
     path('tipos/', TipoEquipoListView.as_view(), name='tipoequipo-list'),
     path('tipos/new/', TipoEquipoCreateView.as_view(), name='tipoequipo-create'),
     path('tipos/edit/<int:pk>/', TipoEquipoUpdateView.as_view(), name='tipoequipo-update'),

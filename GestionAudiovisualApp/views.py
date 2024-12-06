@@ -6,8 +6,16 @@ from django import forms
 from django.db.models import Q  # Para manejar consultas complejas
 from .forms import ModeloForm, EquipoForm, UsuarioForm, EmpleadoForm, PrestamoForm, DevolverPrestamoForm, ConsultaCriteriosForm
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
+
+@login_required
+def custom_logout(request):
+    logout(request)
+    return redirect("login")
 
 def inicio(request):
     return render(request, 'inicio.html')

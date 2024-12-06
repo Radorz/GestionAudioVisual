@@ -69,6 +69,13 @@
     <!-- Sidebar -->
     <nav id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-dark">
         <h4>Gestión AudioVisual</h4>
+        {% if user.is_authenticated%}
+            <p>Hi, {{user.username}} :)</p>
+            <p><a href="{% url 'logout' %}">Log Out</a></p>
+        {%else%}
+            <p>You are not logged in</p>
+            <a href="{% url 'login' %}">Login</a>
+        {%endif%}
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">       
             <!-- Opción para Prestamos -->

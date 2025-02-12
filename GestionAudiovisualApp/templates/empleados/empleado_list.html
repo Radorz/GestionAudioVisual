@@ -44,7 +44,19 @@
                             <span class="badge bg-danger">Inactivo</span>
                         {% endif %}
                     </td>
-                    <td>                
+                    <td>   
+                        <form method="post" action="{% url 'empleado-toggle-estado' empleado.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            {% if empleado.estado %}
+                                <button type="submit" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-ban"></i> Desactivar
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Activar
+                                </button>
+                            {% endif %}
+                        </form>             
                         <a href="{% url 'empleado-update' empleado.pk %}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                         <a href="{% url 'empleado-delete' empleado.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                     </td>

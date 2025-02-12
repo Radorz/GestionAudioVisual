@@ -74,7 +74,7 @@
             <p><a href="{% url 'logout' %}">Log Out</a></p>
         {%else%}
             <p>You are not logged in</p>
-            <a href="{% url 'login' %}">Login</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'login' %}">Login</a>
         {%endif%}
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">       

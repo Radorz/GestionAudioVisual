@@ -65,7 +65,7 @@ class Empleado(models.Model):
     nombre          = models.CharField(max_length=100)
     cedula          = models.CharField(max_length=11)
     tanda_labor     = models.CharField(max_length=50)
-    fecha_ingreso   = models.DateField()
+    fecha_ingreso   = models.DateField(null=True, blank=True)
     estado          = models.BooleanField(default=True)
 
     def __str__(self):

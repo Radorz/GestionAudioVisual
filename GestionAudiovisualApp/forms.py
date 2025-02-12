@@ -32,6 +32,9 @@ class EmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
         fields = ['nombre', 'cedula', 'tanda_labor', 'fecha_ingreso', 'estado']
+        widgets = {
+        'fecha_ingreso': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
 
 class PrestamoForm(forms.ModelForm):
     empleado = forms.ModelChoiceField(

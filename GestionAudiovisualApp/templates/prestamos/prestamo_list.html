@@ -5,7 +5,7 @@
 {% block content %}
 <h2 class="mb-4">Lista de Préstamos</h2>
 
-<form method="GET" class="mb-3">
+<form method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="Buscar por empleado o equipo" value="{{ request.GET.q }}">
         <button class="btn btn-outline-primary" type="submit">

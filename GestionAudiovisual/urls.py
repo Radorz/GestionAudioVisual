@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from GestionAudiovisualApp.views import ( inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,ToggleEstadoTipoEquipoView,                                         
-    MarcaListView, MarcaCreateView, MarcaUpdateView, MarcaDeleteView,
+from GestionAudiovisualApp.views import ( ToggleEstadoEmpleadoView, ToggleEstadoEquipoView, ToggleEstadoModeloView, ToggleEstadoTecnologiaConexionView, ToggleEstadoUsuarioView, inicio,TipoEquipoListView, TipoEquipoCreateView, TipoEquipoUpdateView, TipoEquipoDeleteView,ToggleEstadoTipoEquipoView,                                         
+    MarcaListView, MarcaCreateView, MarcaUpdateView, MarcaDeleteView, ToggleEstadoMarcaView,
     ModeloListView, ModeloCreateView, ModeloUpdateView, ModeloDeleteView,
     TecnologiaConexionListView, TecnologiaConexionCreateView, TecnologiaConexionUpdateView, TecnologiaConexionDeleteView,
     EquipoListView, EquipoCreateView, EquipoUpdateView, EquipoDeleteView,
@@ -46,34 +46,42 @@ urlpatterns = [
     path('marcas/new/', MarcaCreateView.as_view(), name='marca-create'),
     path('marcas/update/<int:pk>/', MarcaUpdateView.as_view(), name='marca-update'),
     path('marcas/delete/<int:pk>/', MarcaDeleteView.as_view(), name='marca-delete'),
+    path('marcas/<int:pk>/toggle_estado/', ToggleEstadoMarcaView.as_view(), name='marca-toggle-estado'),
+
 
     # CRUD de Modelo
     path('modelos/', ModeloListView.as_view(), name='modelo-list'),
     path('modelos/new/', ModeloCreateView.as_view(), name='modelo-create'),
     path('modelos/update/<int:pk>/', ModeloUpdateView.as_view(), name='modelo-update'),
     path('modelos/delete/<int:pk>/', ModeloDeleteView.as_view(), name='modelo-delete'),
+    path('modelos/<int:pk>/toggle_estado/', ToggleEstadoModeloView.as_view(), name='modelo-toggle-estado'),
 
     # CRUD de Tecnología de Conexión
     path('tecnologias/', TecnologiaConexionListView.as_view(), name='tecnologiaconexion-list'),
     path('tecnologias/new/', TecnologiaConexionCreateView.as_view(), name='tecnologiaconexion-create'),
     path('tecnologias/update/<int:pk>/', TecnologiaConexionUpdateView.as_view(), name='tecnologiaconexion-update'),
     path('tecnologias/delete/<int:pk>/', TecnologiaConexionDeleteView.as_view(), name='tecnologiaconexion-delete'),
+    path('tecnologias/<int:pk>/toggle_estado/', ToggleEstadoTecnologiaConexionView.as_view(), name='tecnologiaconexion-toggle-estado'),
+
 
     # CRUD de Equipos
     path('equipos/', EquipoListView.as_view(), name='equipo-list'),
     path('equipos/new/', EquipoCreateView.as_view(), name='equipo-create'),
     path('equipos/<int:pk>/edit/', EquipoUpdateView.as_view(), name='equipo-update'),
     path('equipos/<int:pk>/delete/', EquipoDeleteView.as_view(), name='equipo-delete'),
+    path('equipos/<int:pk>/toggle_estado/', ToggleEstadoEquipoView.as_view(), name='equipo-toggle-estado'),
 
     path('usuarios/', UsuarioListView.as_view(), name='usuario-list'),
     path('usuarios/new/', UsuarioCreateView.as_view(), name='usuario-create'),
     path('usuarios/<int:pk>/edit/', UsuarioUpdateView.as_view(), name='usuario-update'),
     path('usuarios/<int:pk>/delete/', UsuarioDeleteView.as_view(), name='usuario-delete'),
+    path('usuarios/<int:pk>/toggle_estado/', ToggleEstadoUsuarioView.as_view(), name='usuario-toggle-estado'),
 
     path('empleados/', EmpleadoListView.as_view(), name='empleado-list'),
     path('empleados/new/', EmpleadoCreateView.as_view(), name='empleado-create'),
     path('empleados/<int:pk>/edit/', EmpleadoUpdateView.as_view(), name='empleado-update'),
     path('empleados/<int:pk>/delete/', EmpleadoDeleteView.as_view(), name='empleado-delete'),
+    path('empleados/<int:pk>/toggle_estado/', ToggleEstadoEmpleadoView.as_view(), name='empleado-toggle-estado'),
 
     path('prestamos/', PrestamoListView.as_view(), name='prestamo-list'),
     path('prestamos/new/', PrestamoCreateView.as_view(), name='prestamo-create'),

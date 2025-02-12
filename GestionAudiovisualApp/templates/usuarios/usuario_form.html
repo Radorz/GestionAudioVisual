@@ -23,10 +23,6 @@
         <div class="mb-3">
             {{ form.tipo_persona|as_crispy_field }}
         </div>
-        <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" id="estado_switch" name="estado" {% if form.estado.value == "True" %}checked{% endif %}>
-            <label class="form-check-label" for="estado_switch">Activo</label>
-        </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{% url 'usuario-list' %}" class="btn btn-secondary">Cancelar</a>
     </form>

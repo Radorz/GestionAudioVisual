@@ -49,6 +49,18 @@
                         {% endif %}
                     </td>
                     <td>
+                        <form method="post" action="{% url 'usuario-toggle-estado' usuario.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            {% if usuario.estado %}
+                                <button type="submit" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-ban"></i> Desactivar
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Activar
+                                </button>
+                            {% endif %}
+                        </form>
                         <a href="{% url 'usuario-update' usuario.id %}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                         <a href="{% url 'usuario-delete' usuario.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                     </td>

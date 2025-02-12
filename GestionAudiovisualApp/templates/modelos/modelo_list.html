@@ -41,6 +41,18 @@
                         {% endif %}
                     </td>
                     <td>
+                        <form method="post" action="{% url 'modelo-toggle-estado' modelo.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            {% if modelo.estado %}
+                                <button type="submit" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-ban"></i> Desactivar
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Activar
+                                </button>
+                            {% endif %}
+                        </form>
                         <a href="{% url 'modelo-update' modelo.pk %}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                         <a href="{% url 'modelo-delete' modelo.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                     </td>

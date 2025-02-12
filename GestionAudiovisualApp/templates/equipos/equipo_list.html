@@ -51,6 +51,18 @@
                     {% endif %}
                 </td>
                 <td>
+                    <form method="post" action="{% url 'equipo-toggle-estado' equipo.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        {% if equipo.estado %}
+                            <button type="submit" class="btn btn-warning btn-sm">
+                                <i class="fas fa-ban"></i> Desactivar
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fas fa-check"></i> Activar
+                            </button>
+                        {% endif %}
+                    </form>
                     <a href="{% url 'equipo-update' equipo.pk %}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                     <a href="{% url 'equipo-delete' equipo.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                 </td>

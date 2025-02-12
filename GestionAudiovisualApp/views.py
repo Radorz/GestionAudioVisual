@@ -54,7 +54,7 @@ class TipoEquipoCreateView(CreateView):
 
 class TipoEquipoUpdateView(UpdateView):
     model = TipoEquipo
-    fields = [ 'descripcion', 'estado']
+    fields = [ 'descripcion']
     template_name = 'tipos-equipos/tipoequipo_form.html'
     success_url = reverse_lazy('tipoequipo-list')
 
@@ -85,13 +85,13 @@ class MarcaListView(ListView):
 
 class MarcaCreateView(CreateView):
     model = Marca
-    fields = ['descripcion', 'estado']
+    fields = ['descripcion']
     template_name = 'marcas/marca_form.html'
     success_url = reverse_lazy('marca-list')
 
 class MarcaUpdateView(UpdateView):
     model = Marca
-    fields = ['descripcion', 'estado']
+    fields = ['descripcion']
     template_name = 'marcas/marca_form.html'
     success_url = reverse_lazy('marca-list')
 
@@ -99,6 +99,13 @@ class MarcaDeleteView(DeleteView):
     model = Marca
     template_name = 'marcas/marca_confirm_delete.html'
     success_url = reverse_lazy('marca-list')
+
+class ToggleEstadoMarcaView(View):
+    def post(self, request, pk):
+        marca = get_object_or_404(Marca, pk=pk)
+        marca.estado = not marca.estado  # Cambiar el estado
+        marca.save()
+        return redirect(reverse('marca-list'))
 
 # Modelo Views
 class ModeloListView(ListView):
@@ -110,7 +117,7 @@ class ModeloListView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nombre__icontains=query) | Q(marca__descripcion__icontains=query)
+                Q(descripcion__icontains=query) | Q(marca__descripcion__icontains=query)
             )
         return queryset
 
@@ -131,21 +138,36 @@ class ModeloDeleteView(DeleteView):
     template_name = 'modelos/modelo_confirm_delete.html'
     success_url = reverse_lazy('modelo-list')
 
+
+class ToggleEstadoModeloView(View):
+    def post(self, request, pk):
+        modelo = get_object_or_404(Modelo, pk=pk)
+        modelo.estado = not modelo.estado  # Cambiar el estado
+        modelo.save()
+        return redirect(reverse('modelo-list'))
 # Tecnología de Conexión Views
 class TecnologiaConexionListView(ListView):
     model = TecnologiaConexion
     template_name = 'tecnologia-conexion/tecnologiaconexion_list.html'
     context_object_name = 'tecnologias'
+    def get_queryset(self):
+        queryset = TecnologiaConexion.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(descripcion__icontains=query)
+            )
+        return queryset
 
 class TecnologiaConexionCreateView(CreateView):
     model = TecnologiaConexion
-    fields = ['descripcion', 'estado']
+    fields = ['descripcion']
     template_name = 'tecnologia-conexion/tecnologiaconexion_form.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
 
 class TecnologiaConexionUpdateView(UpdateView):
     model = TecnologiaConexion
-    fields = ['descripcion', 'estado']
+    fields = ['descripcion']
     template_name = 'tecnologia-conexion/tecnologiaconexion_form.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
 
@@ -153,11 +175,25 @@ class TecnologiaConexionDeleteView(DeleteView):
     model = TecnologiaConexion
     template_name = 'tecnologia-conexion/tecnologiaconexion_confirm_delete.html'
     success_url = reverse_lazy('tecnologiaconexion-list')
-
+class ToggleEstadoTecnologiaConexionView(View):
+    def post(self, request, pk):
+        tecnologia = get_object_or_404(TecnologiaConexion, pk=pk)
+        tecnologia.estado = not tecnologia.estado  # Cambiar el estado
+        tecnologia.save()
+        return redirect(reverse('tecnologiaconexion-list'))
 class EquipoListView(ListView):
     model = Equipo
     template_name = 'equipos/equipo_list.html'
     context_object_name = 'equipos'
+    def get_queryset(self):
+        queryset = Equipo.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(descripcion__icontains=query) | Q(marca__descripcion__icontains=query) | Q(modelo__descripcion__icontains=query)
+            )
+        return queryset
+
 
 # Vista para crear un nuevo Equipo
 class EquipoCreateView(CreateView):
@@ -171,7 +207,7 @@ class EquipoCreateView(CreateView):
 class EquipoUpdateView(UpdateView):
     model = Equipo
     template_name = 'equipos/equipo_form.html'
-    fields = ['descripcion', 'numero_serial', 'service_tag', 'tipo_equipo', 'marca', 'modelo', 'tecnologia_conexion', 'estado']
+    fields = ['descripcion', 'numero_serial', 'service_tag', 'tipo_equipo', 'marca', 'modelo', 'tecnologia_conexion']
     success_url = reverse_lazy('equipo-list')
 
 # Vista para eliminar un Equipo
@@ -180,10 +216,24 @@ class EquipoDeleteView(DeleteView):
     template_name = 'equipos/equipo_confirm_delete.html'
     success_url = reverse_lazy('equipo-list')
 
+class ToggleEstadoEquipoView(View):
+    def post(self, request, pk):
+        equipo = get_object_or_404(Equipo, pk=pk)
+        equipo.estado = not equipo.estado  # Cambiar el estado
+        equipo.save()
+        return redirect(reverse('equipo-list'))
 class UsuarioListView(ListView):
     model = Usuario
     template_name = 'usuarios/usuario_list.html'
     context_object_name = 'usuarios'
+    def get_queryset(self):
+        queryset = Usuario.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(nombre__icontains=query) 
+            )
+        return queryset
 
 class UsuarioCreateView(CreateView):
     model = Usuario
@@ -201,7 +251,12 @@ class UsuarioDeleteView(DeleteView):
     model = Usuario
     template_name = 'usuarios/usuario_confirm_delete.html'
     success_url = reverse_lazy('usuario-list')
-
+class ToggleEstadoUsuarioView(View):
+    def post(self, request, pk):
+        usuario = get_object_or_404(Usuario, pk=pk)
+        usuario.estado = not usuario.estado  # Cambiar el estado
+        usuario.save()
+        return redirect(reverse('usuario-list'))
 class EmpleadoListView(ListView):
     model = Empleado
     template_name = 'empleados/empleado_list.html'
@@ -223,11 +278,29 @@ class EmpleadoDeleteView(DeleteView):
     model = Empleado
     template_name = 'empleados/empleado_confirm_delete.html'
     success_url = reverse_lazy('empleado-list')
-
+class ToggleEstadoEmpleadoView(View):
+    def post(self, request, pk):
+        empleado = get_object_or_404(Empleado, pk=pk)
+        empleado.estado = not empleado.estado  # Cambiar el estado
+        empleado.save()
+        return redirect(reverse('empleado-list'))
 class PrestamoListView(ListView):
     model = Prestamo
     template_name = 'prestamos/prestamo_list.html'
     context_object_name = 'prestamos'
+
+    def get_queryset(self):
+        # Obtener la consulta GET
+        query = self.request.GET.get('q', '')  # Campo de búsqueda en el formulario
+        queryset = super().get_queryset()  # Obtener el queryset inicial
+
+        # Aplicar filtro si la consulta no está vacía
+        if query:
+            queryset = queryset.filter(
+                Q(empleado__nombre__icontains=query) |  # Filtrar por empleado
+                Q(equipo__descripcion__icontains=query)  # Filtrar por equipo
+            )
+        return queryset
 
 class PrestamoCreateView(CreateView):
     model = Prestamo

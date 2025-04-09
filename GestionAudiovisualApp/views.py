@@ -91,7 +91,7 @@ class MarcaListView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nombre__icontains=query)
+                Q(descripcion__icontains=query)
             )
         return queryset
 
@@ -282,7 +282,14 @@ class EmpleadoListView(ListView):
     model = Empleado
     template_name = 'empleados/empleado_list.html'
     context_object_name = 'empleados'
-
+    def get_queryset(self):
+        queryset = Empleado.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(nombre__icontains=query) 
+            )
+        return queryset
 class EmpleadoCreateView(CreateView):
     model = Empleado
     form_class = EmpleadoForm
